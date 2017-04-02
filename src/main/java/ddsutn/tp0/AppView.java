@@ -17,26 +17,20 @@ public class AppView extends MainWindow<AppViewModel> {
 
 	@Override
 	public void createContents(Panel mainPanel) {
+		
 		setTitle("Student Grades");
 		mainPanel.setLayout(new VerticalLayout());
-		new Label(mainPanel).setText(">>>>>>> Bonjour le monde ! <<<<<<<");
+		new Label(mainPanel).setText("Lector de Notas");
 		
 		new Label(mainPanel).setText("Ingresar token de alumno:");
 		Control nombre = new TextBox(mainPanel).setWidth(200);
 		
 		new Button(mainPanel).setCaption("Buscar").onClick(this::searchStudent).setAsDefault();
+		
+		new Label(mainPanel).bindValueToProperty("student");
+		
 	}
-	
-//	@Override
-//	public void addActions(Panel mainPanel){
-//	
-//		new Label(mainPanel)
-//		.setText("Ingresar token de alumno:");
-//		
-//		Control nombre = new TextBox(mainPanel);
-//		nombre.setWidth(200);
-//	}
-	
+
 	public static void main(String[] args) {
 		new AppView().startApplication();
 	}
