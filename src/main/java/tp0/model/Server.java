@@ -1,19 +1,21 @@
-package ddsutn.tp0;
+package tp0.model;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+
+import tp0.Settings;
 
 public class Server {
 	private static Server instance = new Server();
 	
 	private final static String location = "http://notitas.herokuapp.com";
 	
-	// habría que ver de crear un archivo de configuración para poner esto ahí
-	private final static String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMTEyMjIzMzMiLCJybmQiOiJ5SXNmZFIwN2lIR3BRRmVjYU9KT2VRPT0ifQ.9pVJGUXhrJPQ-TptNCt971l0h_1dWqWgMrHAWXJchho";
+	private String token;
 	
 	private WebTarget target;
 	
@@ -26,10 +28,18 @@ public class Server {
 		return instance;
 	}
 	
+	private String getToken() {
+		if(token == null) {
+			token = Settings.get("token");
+		}
+		
+		return token;
+	}
+	
 	private <T> Invocation buildRequest(String path, T putResource) {
 		Invocation.Builder request = target.path(path)
 		.request(MediaType.APPLICATION_JSON_TYPE)
-		.header("Authorization", "Bearer " + token);
+		.header("Authorization", "Bearer " + getToken());
 		
 		if(putResource != null) {
 			Entity<T> entity = Entity.entity(putResource, MediaType.APPLICATION_JSON_TYPE);
@@ -57,5 +67,13 @@ public class Server {
 	
 	public boolean setStudent(Student student) {
 		return buildRequest("student", student).invoke().getStatus() == 201;
+	}
+	
+	public boolean tokenIsValid(String token) {
+		this.token = token;
+		boolean valid = buildRequest("student").invoke().getStatus() != 401;
+		this.token = null;
+		
+		return valid;
 	}
 }

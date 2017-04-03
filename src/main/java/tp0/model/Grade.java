@@ -1,4 +1,4 @@
-package ddsutn.tp0;
+package tp0.model;
 
 public class Grade {
 	public int id;

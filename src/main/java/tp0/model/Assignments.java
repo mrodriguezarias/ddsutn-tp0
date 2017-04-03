@@ -1,4 +1,4 @@
-package ddsutn.tp0;
+package tp0.model;
 
 import java.util.List;
 import java.util.stream.Collectors;
