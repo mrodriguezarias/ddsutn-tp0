@@ -1,7 +1,7 @@
 package tp0.model;
 
 public class Student {
-	public int code;
+	public String code;
 	public String first_name;
 	public String last_name;
 	public String github_user;

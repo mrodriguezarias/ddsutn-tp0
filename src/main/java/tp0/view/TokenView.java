@@ -1,6 +1,7 @@
 package tp0.view;
 
 import org.uqbar.arena.widgets.Label;
+
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Panel;
@@ -29,9 +30,7 @@ public class TokenView extends Dialog<TokenViewModel> {
 	
 	@Override
 	protected void addActions(Panel actionsPanel) {
-		Label errorLabel = new Label(actionsPanel);
-		errorLabel.setWidth(actionsPanel.getWidth());
-		errorLabel.bindValueToProperty("message");
+		new Label(actionsPanel).setWidth(actionsPanel.getWidth());
 		new Button(actionsPanel).setCaption("Aceptar").onClick(this::accept).setAsDefault();
 	}
 	
@@ -39,6 +38,8 @@ public class TokenView extends Dialog<TokenViewModel> {
 	public void accept() {
 		if(getModelObject().saveToken()) {
 			super.accept();
+		} else {
+			showError("Error: token inválido.");
 		}
 	}
 	

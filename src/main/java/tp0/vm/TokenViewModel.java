@@ -9,7 +9,6 @@ import tp0.model.Server;
 public class TokenViewModel {
 	
 	private String token;
-	private String message;
 
 	public String getToken() {
 		return token;
@@ -19,24 +18,11 @@ public class TokenViewModel {
 		this.token = token;
 	}
 	
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String error) {
-		this.message = error;
-	}
-	
 	public boolean saveToken() {
-		boolean validToken = false;
-		setMessage("Verificando…");
-		
-		validToken = Server.getInstance().tokenIsValid(token);
+		boolean validToken = Server.getInstance().tokenIsValid(token);
 		
 		if(validToken) {
 			Settings.set("token", token);
-		} else {
-			setMessage("Error: token inválido.");
 		}
 		
 		return validToken;
