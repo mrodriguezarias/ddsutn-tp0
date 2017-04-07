@@ -27,5 +27,4 @@ public class TokenViewModel {
 		
 		return validToken;
 	}
-	
 }

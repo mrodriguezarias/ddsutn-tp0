@@ -66,4 +66,9 @@ public final class Settings {
 	public static String get(String key) {
 		return getPropertiesObject().getProperty(key);
 	}
+	
+	public static boolean isSet(String key) {
+		String value = get(key);
+		return value != null && !value.isEmpty();
+	}
 }

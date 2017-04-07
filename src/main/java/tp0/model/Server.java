@@ -15,8 +15,6 @@ public class Server {
 	
 	private final static String location = "http://notitas.herokuapp.com";
 	
-	private String token;
-	
 	private WebTarget target;
 	
 	private Server() {
@@ -28,18 +26,10 @@ public class Server {
 		return instance;
 	}
 	
-	private String getToken() {
-		if(token == null) {
-			token = Settings.get("token");
-		}
-		
-		return token;
-	}
-	
-	private <T> Invocation buildRequest(String path, T putResource) {
+	private <T> Invocation buildRequest(String path, T putResource, String token) {
 		Invocation.Builder request = target.path(path)
 		.request(MediaType.APPLICATION_JSON_TYPE)
-		.header("Authorization", "Bearer " + getToken());
+		.header("Authorization", "Bearer " + token);
 		
 		if(putResource != null) {
 			Entity<T> entity = Entity.entity(putResource, MediaType.APPLICATION_JSON_TYPE);
@@ -47,6 +37,10 @@ public class Server {
 		}
 		
 		return request.buildGet();
+	}
+	
+	private <T> Invocation buildRequest(String path, T putResource) {
+		return buildRequest(path, putResource, Settings.get("token"));
 	}
 	
 	private Invocation buildRequest(String path) {
@@ -70,10 +64,6 @@ public class Server {
 	}
 	
 	public boolean tokenIsValid(String token) {
-		this.token = token;
-		boolean valid = buildRequest("student").invoke().getStatus() != 401;
-		this.token = null;
-		
-		return valid;
+		return buildRequest("student", null, token).invoke().getStatus() != 401;
 	}
 }

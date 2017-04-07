@@ -15,7 +15,7 @@ public class StudentView extends Dialog<StudentViewModel> {
 	
 	private Panel mainPanel;
 	private final int LABEL_WIDTH = 60;
-	private final int TEXTBOX_WIDTH = 180;
+	private final int TEXTBOX_WIDTH = 280;
 	
 	public StudentView(WindowOwner owner) {
 		super(owner, new StudentViewModel());
@@ -42,8 +42,8 @@ public class StudentView extends Dialog<StudentViewModel> {
 	@Override
 	protected void addActions(Panel actionsPanel) {
 		new Button(actionsPanel).setCaption("Cancelar").onClick(this::cancel);
-		new Label(actionsPanel).setWidth(new Double(TEXTBOX_WIDTH / 2.5).intValue());
-		new Button(actionsPanel).setCaption("Guardar").onClick(this::accept).setAsDefault();
+		new Button(actionsPanel).setCaption("Cambiar alumno").onClick(() -> new TokenView(this).open());
+		new Button(actionsPanel).setCaption("Actualizar datos").onClick(this::accept).setAsDefault();
 	}
 	
 	@Override

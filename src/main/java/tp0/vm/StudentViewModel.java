@@ -14,11 +14,7 @@ public class StudentViewModel {
 	private String github_user;
 	
 	public StudentViewModel() {
-		Student student = Server.getInstance().getStudent();
-		this.code = student.code;
-		this.first_name = student.first_name;
-		this.last_name = student.last_name;
-		this.github_user = student.github_user;
+		updateStudent();
 	}
 	
 	public String getCode() {
@@ -56,6 +52,14 @@ public class StudentViewModel {
 	public boolean saveStudent() {
 		Student student = new Student(first_name, last_name, github_user);
 		return Server.getInstance().setStudent(student);
+	}
+	
+	public void updateStudent() {
+		Student student = Server.getInstance().getStudent();
+		this.code = student.getCode();
+		this.first_name = student.getFirst_name();
+		this.last_name = student.getLast_name();
+		this.github_user = student.getGithub_user();
 	}
 	
 }
